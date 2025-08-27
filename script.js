@@ -20,15 +20,22 @@ display.addEventListener("click", () => {
     console.log("added keydown listener!");
 
     if (numInputs.includes(e.key)) {
-      displayArray.push(e.key);
+      displayArray.push(parseInt(e.key));
+      console.log(displayArray);
       display.value += e.key;
-    } else if (opInputs.includes(e.key)) {
+    } else if (
+      opInputs.includes(e.key) &&
+      !isNaN(displayArray[displayArray.length - 1])
+    ) {
+      displayArray.push(e.key);
       display.value += " " + e.key + " ";
     } else if (e.key === "Backspace") {
       let newValue = display.value.slice(0, -1);
       display.value = newValue;
+      displayArray.pop();
       console.log(display.value);
       console.log(display.value.length);
+      console.log(displayArray);
       console.log("backspace!");
     } else {
       display.innerText += "";
@@ -66,8 +73,15 @@ opButtons.map((e, i) => {
     });
   } else {
     e.addEventListener("click", (e) => {
-      console.log(`clicked ${e.target.innerText}!`);
-      display.value += ` ${e.target.innerText} `;
+      if (
+        opInputs.includes(e.key) &&
+        !isNaN(displayArray[displayArray.length - 1])
+      ) {
+        console.log(`clicked ${e.target.innerText}!`);
+        display.value += ` ${e.target.innerText} `;
+      } else {
+        return;
+      }
     });
   }
 });
