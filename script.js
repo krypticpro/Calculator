@@ -6,6 +6,7 @@ const opButtons = [...getOpButtons];
 const displayArray = [];
 const numInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const opInputs = ["+", "-", "*", "/"];
+const clear = document.getElementById("clear");
 
 function backspace(str) {
   let newStr = str.slice(0, -1);
@@ -14,7 +15,6 @@ function backspace(str) {
 
 window.onload = (e) => {
   const click = new MouseEvent("click");
-  console.log("page is fully loaded");
   display.focus();
   display.click();
 };
@@ -103,4 +103,8 @@ opButtons.map((e, i) => {
       }
     });
   }
+});
+
+clear.addEventListener("click", (e) => {
+  display.value = "";
 });
