@@ -12,6 +12,13 @@ function backspace(str) {
   str = newStr;
 }
 
+window.onload = (e) => {
+  const click = new MouseEvent("click");
+  console.log("page is fully loaded");
+  display.focus();
+  display.click();
+};
+
 display.addEventListener("click", () => {
   function handleKey(e) {
     if (numInputs.includes(e.key)) {
