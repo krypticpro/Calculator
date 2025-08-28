@@ -14,8 +14,6 @@ function backspace(str) {
 }
 
 display.addEventListener("click", () => {
-  display.dispatchEvent(focus);
-  console.log("received focus!");
   function handleKey(e) {
     console.log("added keydown listener!");
 
@@ -29,14 +27,14 @@ display.addEventListener("click", () => {
     ) {
       displayArray.push(e.key);
       display.value += " " + e.key + " ";
+    } else if (e.key === "Enter") {
+      let equals = document.getElementById("equals");
+      let click = new MouseEvent("click");
+      equals.dispatchEvent(click);
     } else if (e.key === "Backspace") {
       let newValue = display.value.slice(0, -1);
       display.value = newValue;
       displayArray.pop();
-      console.log(display.value);
-      console.log(display.value.length);
-      console.log(displayArray);
-      console.log("backspace!");
     } else {
       display.innerText += "";
     }
@@ -44,15 +42,15 @@ display.addEventListener("click", () => {
 
   display.addEventListener("blur", () => {
     display.removeEventListener("keydown", handleKey);
-    console.log("lost focus");
   });
   display.addEventListener("keydown", handleKey);
 });
 
 numButtons.map((e) => {
   e.addEventListener("click", (e) => {
-    console.log(`clicked ${e.target.innerText}!`);
-    display.value += e.target.innerText;
+    let num = e.target.innerText;
+    display.value += num;
+    displayArray.push(parseInt(num));
   });
 });
 
@@ -61,7 +59,6 @@ opButtons.map((e, i) => {
     e.addEventListener("click", (e) => {
       let ans = eval(display.value);
       display.value = ans;
-      console.log("evaluated!");
     });
   } else if (i === 5) {
     e.addEventListener("click", (e) => {
@@ -73,12 +70,14 @@ opButtons.map((e, i) => {
     });
   } else {
     e.addEventListener("click", (e) => {
+      let symbol = e.target.innerText;
       if (
-        opInputs.includes(e.key) &&
+        opInputs.includes(symbol) &&
         !isNaN(displayArray[displayArray.length - 1])
       ) {
-        console.log(`clicked ${e.target.innerText}!`);
-        display.value += ` ${e.target.innerText} `;
+        console.log(`clicked ${symbol}!`);
+        display.value += ` ${symbol} `;
+        displayArray.push(` ${symbol} `);
       } else {
         return;
       }
