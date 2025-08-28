@@ -1,12 +1,11 @@
-let display = document.getElementById("display");
-let getNumButtons = document.querySelectorAll(".number");
-let numButtons = [...getNumButtons];
-let getOpButtons = document.querySelectorAll(".operator");
-let opButtons = [...getOpButtons];
-let focus = new FocusEvent("focus");
-let displayArray = [];
-let numInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-let opInputs = ["+", "-", "*", "/"];
+const display = document.getElementById("display");
+const getNumButtons = document.querySelectorAll(".number");
+const numButtons = [...getNumButtons];
+const getOpButtons = document.querySelectorAll(".operator");
+const opButtons = [...getOpButtons];
+const displayArray = [];
+const numInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+const opInputs = ["+", "-", "*", "/"];
 
 function backspace(str) {
   let newStr = str.slice(0, -1);
@@ -15,11 +14,8 @@ function backspace(str) {
 
 display.addEventListener("click", () => {
   function handleKey(e) {
-    console.log("added keydown listener!");
-
     if (numInputs.includes(e.key)) {
       displayArray.push(parseInt(e.key));
-      console.log(displayArray);
       display.value += e.key;
     } else if (
       opInputs.includes(e.key) &&
@@ -36,7 +32,7 @@ display.addEventListener("click", () => {
       display.value = newValue;
       displayArray.pop();
     } else {
-      display.innerText += "";
+      return;
     }
   }
 
@@ -64,9 +60,6 @@ opButtons.map((e, i) => {
     e.addEventListener("click", (e) => {
       let newValue = display.value.slice(0, -1);
       display.value = newValue;
-      console.log(display.value);
-      console.log(display.value.length);
-      console.log("backspace!");
     });
   } else {
     e.addEventListener("click", (e) => {
@@ -75,7 +68,6 @@ opButtons.map((e, i) => {
         opInputs.includes(symbol) &&
         !isNaN(displayArray[displayArray.length - 1])
       ) {
-        console.log(`clicked ${symbol}!`);
         display.value += ` ${symbol} `;
         displayArray.push(` ${symbol} `);
       } else {
