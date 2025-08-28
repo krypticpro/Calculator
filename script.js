@@ -15,8 +15,17 @@ function backspace(str) {
 display.addEventListener("click", () => {
   function handleKey(e) {
     if (numInputs.includes(e.key)) {
-      displayArray.push(parseInt(e.key));
-      display.value += e.key;
+      if (e.key === "0") {
+        if (!display.value || isNaN(displayArray[displayArray.length - 1])) {
+          return;
+        } else {
+          displayArray.push(parseInt(e.key));
+          display.value += e.key;
+        }
+      } else {
+        displayArray.push(parseInt(e.key));
+        display.value += e.key;
+      }
     } else if (
       opInputs.includes(e.key) &&
       !isNaN(displayArray[displayArray.length - 1])
