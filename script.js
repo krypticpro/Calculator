@@ -42,12 +42,24 @@ display.addEventListener("click", () => {
   display.addEventListener("keydown", handleKey);
 });
 
-numButtons.map((e) => {
-  e.addEventListener("click", (e) => {
-    let num = e.target.innerText;
-    display.value += num;
-    displayArray.push(parseInt(num));
-  });
+numButtons.map((e, i) => {
+  if (i === 9) {
+    e.addEventListener("click", (e) => {
+      if (!display.value || isNaN(displayArray[displayArray.length - 1])) {
+        return;
+      } else {
+        let num = e.target.innerText;
+        display.value += num;
+        displayArray.push(parseInt(num));
+      }
+    });
+  } else {
+    e.addEventListener("click", (e) => {
+      let num = e.target.innerText;
+      display.value += num;
+      displayArray.push(parseInt(num));
+    });
+  }
 });
 
 opButtons.map((e, i) => {
