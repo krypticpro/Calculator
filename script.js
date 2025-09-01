@@ -19,39 +19,39 @@ window.onload = (e) => {
   display.click();
 };
 
-display.addEventListener("click", () => {
-  function handleKey(e) {
-    if (numInputs.includes(e.key)) {
-      if (e.key === "0") {
-        if (!display.value || isNaN(displayArray[displayArray.length - 1])) {
-          return;
-        } else {
-          displayArray.push(parseInt(e.key));
-          display.value += e.key;
-        }
+function handleKey(e) {
+  if (numInputs.includes(e.key)) {
+    if (e.key === "0") {
+      if (!display.value || isNaN(displayArray[displayArray.length - 1])) {
+        return;
       } else {
         displayArray.push(parseInt(e.key));
         display.value += e.key;
       }
-    } else if (
-      opInputs.includes(e.key) &&
-      !isNaN(displayArray[displayArray.length - 1])
-    ) {
-      displayArray.push(e.key);
-      display.value += " " + e.key + " ";
-    } else if (e.key === "Enter") {
-      let equals = document.getElementById("equals");
-      let click = new MouseEvent("click");
-      equals.dispatchEvent(click);
-    } else if (e.key === "Backspace") {
-      let newValue = display.value.slice(0, -1);
-      display.value = newValue;
-      displayArray.pop();
     } else {
-      return;
+      displayArray.push(parseInt(e.key));
+      display.value += e.key;
     }
+  } else if (
+    opInputs.includes(e.key) &&
+    !isNaN(displayArray[displayArray.length - 1])
+  ) {
+    displayArray.push(e.key);
+    display.value += " " + e.key + " ";
+  } else if (e.key === "Enter") {
+    let equals = document.getElementById("equals");
+    let click = new MouseEvent("click");
+    equals.dispatchEvent(click);
+  } else if (e.key === "Backspace") {
+    let newValue = display.value.slice(0, -1);
+    display.value = newValue;
+    displayArray.pop();
+  } else {
+    return;
   }
+}
 
+display.addEventListener("click", () => {
   display.addEventListener("blur", () => {
     display.removeEventListener("keydown", handleKey);
   });
